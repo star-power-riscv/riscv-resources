@@ -37,7 +37,9 @@ It provides examples of 1-stage, 2-stage, 3-stage and 5-stage cores, which I thi
 
 ### [PicoRV32](https://github.com/YosysHQ/picorv32)
 
-`PicoRV32` is a CPU core that implements the RISC-V RV32IMC Instruction Set developed by [Yosys Open SYnthesis Suite group](https://github.com/YosysHQ). They have developed many open source EDA tools.
+`PicoRV32` is a CPU core that implements the RISC-V RV32IMC Instruction Set developed by [Yosys Open SYnthesis Suite group](https://github.com/YosysHQ).
+They have developed many open source EDA tools.
+[Here](https://juejin.cn/post/7372245998897774629) is a brief introduction of the project.
 
 ## Documents
 
