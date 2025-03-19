@@ -1,6 +1,6 @@
 # RISC-V Resources
 
-This repository will hold all the resources that we may utilize, including toolchains, reference designs, documents and etc. . 
+This repository will hold all the resources that we may utilize, including toolchains, reference designs, documents and etc. 
 
 ## Toolchains
 
