@@ -11,20 +11,20 @@ We can use this to **generate test cases and verify our design**.
 
 ### [Verilator](https://www.veripool.org/verilator/)
 
-`Verilator` is a powerful, open-source `Verilog`/`SystemVerilog` simulator. 
+Verilator is a powerful, open-source Verilog/SystemVerilog simulator. 
 **We can use it instead of Vivado** before we need to connect to the demo board.
 
 ### [Chisel](https://www.chisel-lang.org/)
 
-`Chisel` is a Hardware Construction Language (HCL) embedded in [`Scala`](https://www.scala-lang.org/).
-It provides higher level abstraction of hardware, **generating `Verilog` code after compliation**.
+Chisel is a Hardware Construction Language (HCL) embedded in [Scala](https://www.scala-lang.org/).
+It provides higher level abstraction of hardware, **generating Verilog code after compliation**.
 ![](./assets/images/chisel.png)
 
 ## Reference Designs
 
 ### [ultraembedded riscv](https://github.com/ultraembedded/riscv)
 
-A 32-bit RISC-V core written in `Verilog` and an instruction set simulator supporting RV32IM.
+A 32-bit RISC-V core written in Verilog and an instruction set simulator supporting RV32IM.
 
 ### [ultraembedded biriscv](https://github.com/ultraembedded/biriscv)
 
@@ -32,12 +32,12 @@ A 32-bit Superscalar RISC-V CPU.
 
 ### [riscv-sodor](https://github.com/ucb-bar/riscv-sodor)
 
-`riscv-sodor` is **a set of educational microarchitectures for RISC-V ISA** written in `Chisel`, developed by UC Berkeley.
+riscv-sodor is **a set of educational microarchitectures for RISC-V ISA** written in Chisel, developed by UC Berkeley.
 It provides examples of 1-stage, 2-stage, 3-stage and 5-stage cores, which I think very worth learning.
 
 ### [PicoRV32](https://github.com/YosysHQ/picorv32)
 
-`PicoRV32` is a CPU core that implements the RISC-V RV32IMC Instruction Set developed by [Yosys Open SYnthesis Suite group](https://github.com/YosysHQ).
+PicoRV32 is a CPU core that implements the RISC-V RV32IMC Instruction Set developed by [Yosys Open SYnthesis Suite group](https://github.com/YosysHQ).
 They have developed many open source EDA tools.
 [Here](https://juejin.cn/post/7372245998897774629) is a brief introduction of the project.
 
