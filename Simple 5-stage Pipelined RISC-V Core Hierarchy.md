@@ -40,11 +40,14 @@ module core (
 
   // Instrcution Memory IO
   input logic [31:0] imem_data, // 从IMem读取的指令
-  input logic imem_valid, // Imem读使能
+  output logic imem_address, // Imem地址
 
   // Data Memory IO
-  input logic [31:0] dmem_data, // 从DMem读取的数据
-  input logic dmem_valid, // Dmem读使能
+  input logic [31:0] dmem_rdata, // 从DMem读取的数据
+  output logic dmem_we,
+  output logic [1:0] dmem_mask,
+  output logic [31:0] dmem_wdata,
+  output logic [17:0] dmem_address,
 );
   // 实例化以下5个stage
   // 实例化register file，写法跟上面memory类似，可读可写
@@ -64,7 +67,6 @@ module if_stage (
   
   // 输出给Instruction Momery
   output logic [31:0] pc_address_out, // 这个信号也要输出给Decode阶段，jump时要用
-  output logic imem_valid, // 读使能
   
   // 来自Instruction Memory的输入，也就是fetch到的指令
   input logic [31:0] imem_data,
@@ -89,6 +91,13 @@ module id_stage (
   input logic [31:0] pc_address_in, // PC地址
 
   output logic stall_request,   // Decode需要检查是否存在data hazard，如果存在，这个信号输出给fetch
+  
+  // 与寄存器堆交互
+  output logic [4:0] rs1_address,
+  output logic [4:0] rs2_address,
+  output logic regfile_re,
+  input logic [31:0] rs1_data_in,
+  input logic [31:0] rs2_data_in,
   
   output logic [31:0] rs1_data,
   output logic [31:0] rs2_data,
@@ -133,7 +142,7 @@ module ex_stage (
   output logic reg_write_en_out,
   output logic load_en_out,
   output logic store_en_out,
-  output logic [2:0] func3_out,
+  output logic [2:0] funct3_out,
 );
 endmodule
 ```
@@ -154,10 +163,10 @@ module mem_stage (
 
   // 与data memory通信
   input logic [31:0] dmem_rdata, // 从dmem读回的数据
-  output logic [31:0] dmem_addr, // 发给dmem的地址
+  output logic [17:0] dmem_addr, // 发给dmem的地址
   output logic [31:0] dmem_wdata, // 写给dmem的数据
   output logic dmem_we, // 写使能
-  output logic [3:0] dmem_be, // 字节使能，有些指令只需要对dmem写入目标字节
+  output logic [1:0] dmem_mask, // 字节使能，有些指令只需要对dmem写入目标字节
 
   // 输出给WB stage
   output logic [31:0] mem_result, // 输出到WB的数据（可能是来自ALU或DMEM）
@@ -174,7 +183,42 @@ module wb_stage (
   input logic [31:0] mem_result,
   input logic [4:0] rd_address,
   input logic reg_write_en,
+  
+  output logic [4:0] rd_address_out,
+  output logic [31:0] rd_data,
+  output logic regfile_we,
 );
+endmodule
+```
+
+#### Register File
+
+```verilog
+module reg_file (
+  input logic clk,
+  input logic rst,
+  input logic [4:0] rs1_address,
+  input logic [4:0] rs2_address,
+  output logic [31:0] rs1_data,
+  output logic [31:0] rs2_data,
+  
+  input logic [4:0] rd_address,
+  input logic [31:0] rd_data,
+  input logic re,
+  
+  input logic we,
+);
+  logic [31:0] regs[31:0];
+  always_ff@(posedge clk) {
+    if (rst) {
+      regs <= 0;
+    } else if (re) {
+      rs1_data <= regs[rs1_address];
+      rs2_data <= regs[rs2_address];
+    } else if (we) {
+      regs[rd_address] <= rd_data;
+    }
+   }
 endmodule
 ```
 
